@@ -1,11 +1,11 @@
 runtime bundle/pathogen/autoload/pathogen.vim
 
-" " gvim stuff because i like windows
-" set nocompatible
-" source $VIMRUNTIME/vimrc_example.vim
-" source $VIMRUNTIME/mswin.vim
-" behave mswin
-" 
+" gvim stuff because i like windows
+set nocompatible
+source $VIMRUNTIME/vimrc_example.vim
+source $VIMRUNTIME/mswin.vim
+behave mswin
+
 " set diffexpr=MyDiff()
 " function! MyDiff()
 "   let opt = '-a --binary '
@@ -33,34 +33,33 @@ runtime bundle/pathogen/autoload/pathogen.vim
 " 
 " " END DEFAULT VIMRC
 " 
-" color desert
-" cd \dev
-" 
-" :filetype plugin on
-" execute pathogen#infect()
-" map <C-n> :NERDTreeToggle<CR>
-" map K i<CR><Esc>
-" map <C-B> :wa<CR> :make<CR> :copen 7<CR>
-" 
-" set backupdir=~\vimtmp.
-" set directory=~\vimtmp.
-" set hidden
-" set number
-" set tabstop=2 shiftwidth=2 expandtab
-" 
-" " case-insensitive searching with /
-" set ic
-" 
-" " javascript syntax highlighting for .json files
-" autocmd BufNewFile,BufRead *.json set ft=javascript
-" 
-" " Commenting blocks of code.
-" autocmd FileType c,cpp,java,scala,cs,javascript let b:comment_leader = '// '
-" autocmd FileType sh,ruby,python   let b:comment_leader = '# '
-" autocmd FileType conf,fstab       let b:comment_leader = '# '
-" autocmd FileType tex              let b:comment_leader = '% '
-" autocmd FileType mail             let b:comment_leader = '> '
-" autocmd FileType vim              let b:comment_leader = '" '
-" noremap <silent> <Leader>cc :<C-B>silent <C-E>s/^/<C-R>=escape(b:comment_leader,'\/')<CR>/<CR>:nohlsearch<CR>
-" noremap <silent> <Leader>cu :<C-B>silent <C-E>s/^\V<C-R>=escape(b:comment_leader,'\/')<CR>//e<CR>:nohlsearch<CR>
-" 
+color desert
+
+:filetype plugin on
+execute pathogen#infect()
+map <C-n> :NERDTreeToggle<CR>
+map K i<CR><Esc>
+map <C-B> :wa<CR> :make<CR> :copen 7<CR>
+
+set backupdir=~\vimtmp.
+set directory=~\vimtmp.
+set hidden
+set number
+set tabstop=2 shiftwidth=2 expandtab
+
+" case-insensitive searching with /
+set ic
+
+" javascript syntax highlighting for .json files
+autocmd BufNewFile,BufRead *.json set ft=javascript
+
+" Commenting blocks of code.
+autocmd FileType c,cpp,java,scala,cs,javascript let b:comment_leader = '// '
+autocmd FileType sh,ruby,python   let b:comment_leader = '# '
+autocmd FileType conf,fstab       let b:comment_leader = '# '
+autocmd FileType tex              let b:comment_leader = '% '
+autocmd FileType mail             let b:comment_leader = '> '
+autocmd FileType vim              let b:comment_leader = '" '
+noremap <silent> <Leader>cc :<C-B>silent <C-E>s/^/<C-R>=escape(b:comment_leader,'\/')<CR>/<CR>:nohlsearch<CR>
+noremap <silent> <Leader>cu :<C-B>silent <C-E>s/^\V<C-R>=escape(b:comment_leader,'\/')<CR>//e<CR>:nohlsearch<CR>
+
