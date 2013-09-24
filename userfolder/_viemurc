@@ -1,0 +1,20 @@
+
+nnoremap K i<CR><Esc>l
+
+" Change selected text from NameLikeThis to name_like_this.
+vnoremap <Leader>u :s/\<\@!\([A-Z]\)/\_\l\1/g<CR>gul
+
+" Change selected text from name_like_this to NameLikeThis.
+vnoremap <Leader>c :s/_\([a-z]\)/\u\1/g<CR>gUl
+
+" Commenting blocks of code.
+autocmd FileType c,cpp,java,scala,cs,javascript let b:comment_leader = '// '
+autocmd FileType sh,ruby,python   let b:comment_leader = '# '
+autocmd FileType conf,fstab       let b:comment_leader = '# '
+autocmd FileType tex              let b:comment_leader = '% '
+autocmd FileType mail             let b:comment_leader = '> '
+autocmd FileType vim              let b:comment_leader = '" '
+noremap <Leader>cc :<C-B>silent <C-E>s/^/<C-R>=escape(b:comment_leader,'\/')<CR>/<CR>:nohlsearch<CR>
+noremap <Leader>cu :<C-B>silent <C-E>s/^\V<C-R>=escape(b:comment_leader,'\/')<CR>//e<CR>:nohlsearch<CR>
+
+
