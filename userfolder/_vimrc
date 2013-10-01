@@ -38,7 +38,7 @@ color desert
 execute pathogen#infect()
 map <C-n> :NERDTreeToggle<CR>
 map K i<CR><Esc>
-map <C-B> :wa<CR> :make<CR> :copen 7<CR>
+map <C-B> :wa<CR> :!rake<CR> :copen 7<CR>
 
 set number
 
@@ -54,6 +54,37 @@ autocmd FileType mail             let b:comment_leader = '> '
 autocmd FileType vim              let b:comment_leader = '" '
 noremap <silent> <Leader>cc :<C-B>silent <C-E>s/^/<C-R>=escape(b:comment_leader,'\/')<CR>/<CR>:nohlsearch<CR>
 noremap <silent> <Leader>cu :<C-B>silent <C-E>s/^\V<C-R>=escape(b:comment_leader,'\/')<CR>//e<CR>:nohlsearch<CR>
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Fuzzy Finder config
+" 
+" directories and extensions to ignore when listing files
+" these contain a lot of Python-isms, yours will probably vary
+" 
+" Truth be told, I don't remember what these do, but I must have
+" found them necessary back when I installed fuzzyfinder years ago
+let s:slash = '[/\\]'
+let s:startname = '(^|'.s:slash.')'
+let s:endname = '($|'.s:slash.')'
+
+let s:extension = '\.bak|\.dll|\.exe|\.o|\.pyc|\.pyo|\.swp|\.swo'
+let s:dirname = 'ready|build|deploy|dist|vms|\.bzr|\.git|\.hg|\.svn|.+\.egg-info|bin|obj'
+let g:fuf_file_exclude = '\v'.'('.s:startname.'('.s:dirname.')'.s:endname.')|(('.s:extension.')$)'
+let g:fuf_dir_exclude = '\v'.s:startname.'('.s:dirname.')'.s:endname
+
+" limit number of displayed matches
+" (makes response instant even on huge source trees)
+let g:fuf_enumeratingLimit = 60
+
+nnoremap <Leader>ff :FufFile **/<cr>
+nnoremap <Leader>fb :FufBuffer<cr>
+nnoremap <Leader>ft :FufTag<cr>
+
+" (the /min is a Windows-specific way to run the command in the background so that Vim doesn't lock up while indexing very large projects)
+noremap <f12> :!start cmd /c "ctags -R ." & pause<cr>:FufRenewCache<cr>
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Maintainer: 
@@ -227,6 +258,7 @@ set tw=500
 set ai "Auto indent
 set si "Smart indent
 set wrap "Wrap lines
+autocmd FileType ruby setlocal shiftwidth=2 tabstop=2
 
 
 """"""""""""""""""""""""""""""
@@ -388,18 +420,18 @@ endif
 " 
 " " Toggle paste mode on and off
 " map <leader>pp :setlocal paste!<cr>
-" 
-" 
-" 
-" """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" " => Helper functions
-" """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" function! CmdLine(str)
-"     exe "menu Foo.Bar :" . a:str
-"     emenu Foo.Bar
-"     unmenu Foo
-" endfunction
-" 
+
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Helper functions
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! CmdLine(str)
+    exe "menu Foo.Bar :" . a:str
+    emenu Foo.Bar
+    unmenu Foo
+endfunction
+
 function! VisualSelection(direction) range
     let l:saved_reg = @"
     execute "normal! vgvy"
