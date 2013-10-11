@@ -36,11 +36,21 @@ behave mswin
 color desert
 
 execute pathogen#infect()
+let mapleader = ","
 map <C-n> :NERDTreeToggle<CR>
+map <Leader>nb :Bookmark 
 map K i<CR><Esc>
-map <C-B> :wa<CR> :!rake<CR> :copen 7<CR>
+noremap <C-B> :wa<CR> :!rake<CR> :copen 7<CR>
+
+" folding
+nnoremap <Space> za
+vnoremap <Space> za
 
 set number
+
+" editing / sourcing _vimrc
+nnoremap <Leader>ve :vsplit $MYVIMRC<cr>
+nnoremap <Leader>vs :so $MYVIMRC<cr>
 
 " javascript syntax highlighting for .json files
 autocmd BufNewFile,BufRead *.json set ft=javascript
@@ -55,6 +65,7 @@ autocmd FileType vim              let b:comment_leader = '" '
 noremap <silent> <Leader>cc :<C-B>silent <C-E>s/^/<C-R>=escape(b:comment_leader,'\/')<CR>/<CR>:nohlsearch<CR>
 noremap <silent> <Leader>cu :<C-B>silent <C-E>s/^\V<C-R>=escape(b:comment_leader,'\/')<CR>//e<CR>:nohlsearch<CR>
 
+so \users\tmack\vimfiles\userfolder\executesql.vim
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Fuzzy Finder config
@@ -69,7 +80,7 @@ let s:startname = '(^|'.s:slash.')'
 let s:endname = '($|'.s:slash.')'
 
 let s:extension = '\.bak|\.dll|\.exe|\.o|\.pyc|\.pyo|\.swp|\.swo'
-let s:dirname = 'ready|build|deploy|dist|vms|\.bzr|\.git|\.hg|\.svn|.+\.egg-info|bin|obj'
+let s:dirname = 'ready|build|deploy|dist|vms|\.bzr|\.git|\.hg|\.svn|.+\.egg-info|bin|obj|_Resharper.*'
 let g:fuf_file_exclude = '\v'.'('.s:startname.'('.s:dirname.')'.s:endname.')|(('.s:extension.')$)'
 let g:fuf_dir_exclude = '\v'.s:startname.'('.s:dirname.')'.s:endname
 
@@ -82,7 +93,7 @@ nnoremap <Leader>fb :FufBuffer<cr>
 nnoremap <Leader>ft :FufTag<cr>
 
 " (the /min is a Windows-specific way to run the command in the background so that Vim doesn't lock up while indexing very large projects)
-noremap <f12> :!start cmd /c "ctags -R ." & pause<cr>:FufRenewCache<cr>
+noremap <f5> :!start cmd /c "ctags -R ." & pause<cr>:FufRenewCache<cr>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -259,7 +270,10 @@ set ai "Auto indent
 set si "Smart indent
 set wrap "Wrap lines
 autocmd FileType ruby setlocal shiftwidth=2 tabstop=2
+autocmd FileType xml setlocal shiftwidth=2 tabstop=2
 
+" format whole document with ==
+nnoremap == ggVG=
 
 """"""""""""""""""""""""""""""
 " => Visual mode related
@@ -376,9 +390,9 @@ endif
 " " Vimgreps in the current file
 " map <leader><space> :vimgrep // <C-R>%<C-A><right><right><right><right><right><right><right><right><right>
 " 
-" " When you press <leader>r you can search and replace the selected text
-" vnoremap <silent> <leader>r :call VisualSelection('replace')<CR>
-" 
+" When you press <leader>r you can search and replace the selected text
+vnoremap <silent> <leader>r :call VisualSelection('replace')<CR>
+
 " " Do :help cope if you are unsure what cope is. It's super useful!
 " "
 " " When you search with vimgrep, display your results in cope by doing:
