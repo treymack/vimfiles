@@ -36,13 +36,18 @@ behave mswin
 color desert
 
 execute pathogen#infect()
+Helptags
 let mapleader = ","
 map <C-n> :NERDTreeToggle<CR>
+map <Leader><C-n> :NERDTreeFind<CR>
 map <Leader>nb :Bookmark 
 map K i<CR><Esc>
-noremap <C-B> :wa<CR> :!rake<CR> :copen 7<CR>
+" noremap <C-B> :wa<CR> :!rake<CR> :copen 7<CR>
+noremap <C-B> :wa<CR> :!rake<CR>
 
 " folding
+set foldlevelstart=99
+set foldmethod=indent
 nnoremap <Space> za
 vnoremap <Space> za
 
@@ -56,14 +61,15 @@ nnoremap <Leader>vs :so $MYVIMRC<cr>
 autocmd BufNewFile,BufRead *.json set ft=javascript
 
 " Commenting blocks of code.
-autocmd FileType c,cpp,java,scala,cs,javascript let b:comment_leader = '// '
-autocmd FileType sh,ruby,python   let b:comment_leader = '# '
-autocmd FileType conf,fstab       let b:comment_leader = '# '
-autocmd FileType tex              let b:comment_leader = '% '
-autocmd FileType mail             let b:comment_leader = '> '
-autocmd FileType vim              let b:comment_leader = '" '
-noremap <silent> <Leader>cc :<C-B>silent <C-E>s/^/<C-R>=escape(b:comment_leader,'\/')<CR>/<CR>:nohlsearch<CR>
-noremap <silent> <Leader>cu :<C-B>silent <C-E>s/^\V<C-R>=escape(b:comment_leader,'\/')<CR>//e<CR>:nohlsearch<CR>
+noremap <Leader>c :TComment<CR>
+" autocmd FileType c,cpp,java,scala,cs,javascript let b:comment_leader = '// '
+" autocmd FileType sh,ruby,python   let b:comment_leader = '# '
+" autocmd FileType conf,fstab       let b:comment_leader = '# '
+" autocmd FileType tex              let b:comment_leader = '% '
+" autocmd FileType mail             let b:comment_leader = '> '
+" autocmd FileType vim              let b:comment_leader = '" '
+" noremap <silent> <Leader>cc :<C-B>silent <C-E>s/^/<C-R>=escape(b:comment_leader,'\/')<CR>/<CR>:nohlsearch<CR>
+" noremap <silent> <Leader>cu :<C-B>silent <C-E>s/^\V<C-R>=escape(b:comment_leader,'\/')<CR>//e<CR>:nohlsearch<CR>
 
 so \users\tmack\vimfiles\userfolder\executesql.vim
 
@@ -94,6 +100,12 @@ nnoremap <Leader>ft :FufTag<cr>
 
 " (the /min is a Windows-specific way to run the command in the background so that Vim doesn't lock up while indexing very large projects)
 noremap <f5> :!start cmd /c "ctags -R ." & pause<cr>:FufRenewCache<cr>
+
+" open chrome, ff, for current file
+nnoremap <F12>f :exe ':silent !firefox %'<CR>
+nnoremap <F12>c :exe ':silent !"C:/Program Files (x86)/Google/Chrome/Application/chrome.exe" %'<CR>
+nnoremap <F12>o :exe ':silent !opera %'<CR>
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -160,6 +172,11 @@ set autoread
 " Fast saving
 nmap <leader>w :wa!<cr>
 
+" Fast omnicomplete
+inoremap <C-Space> <C-X><C-O>
+
+" Fast esc
+noremap <S-CR> <esc>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
@@ -206,6 +223,7 @@ set magic
 
 " Show matching brackets when text indicator is over them
 set showmatch
+
 " How many tenths of a second to blink when matching brackets
 set mat=2
 
@@ -271,9 +289,10 @@ set si "Smart indent
 set wrap "Wrap lines
 autocmd FileType ruby setlocal shiftwidth=2 tabstop=2
 autocmd FileType xml setlocal shiftwidth=2 tabstop=2
+autocmd BufRead *.cshtml setf html
 
 " format whole document with ==
-nnoremap == ggVG=
+nnoremap == mmggVG=`m
 
 """"""""""""""""""""""""""""""
 " => Visual mode related
