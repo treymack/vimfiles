@@ -291,6 +291,12 @@ autocmd FileType ruby setlocal shiftwidth=2 tabstop=2
 autocmd FileType xml setlocal shiftwidth=2 tabstop=2
 autocmd BufRead *.cshtml setf html
 
+" git git git for FUGITIVE!
+nnoremap <Leader>gs :Gstatus<cr>
+nnoremap <Leader>gb :Gblame<cr>
+nnoremap <Leader>gc :Gcommit<cr>
+nnoremap <Leader>gd :Gdiff<cr>
+
 " format whole document with ==
 nnoremap == mmggVG=`m
 
