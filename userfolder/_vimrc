@@ -33,14 +33,12 @@ behave mswin
 " 
 " " END DEFAULT VIMRC
 " 
-color desert
 
 execute pathogen#infect()
 Helptags
 let mapleader = ","
-map <C-n> :NERDTreeToggle<CR>
-map <Leader><C-n> :NERDTreeFind<CR>
-map <Leader>nb :Bookmark 
+map <Leader>e :NERDTreeToggle<CR>
+map <Leader><Leader>e :NERDTreeFind<CR>
 map K i<CR><Esc>
 " noremap <C-B> :wa<CR> :!rake<CR> :copen 7<CR>
 noremap <C-B> :wa<CR> :!rake<CR>
@@ -62,14 +60,7 @@ autocmd BufNewFile,BufRead *.json set ft=javascript
 
 " Commenting blocks of code.
 noremap <Leader>c :TComment<CR>
-" autocmd FileType c,cpp,java,scala,cs,javascript let b:comment_leader = '// '
-" autocmd FileType sh,ruby,python   let b:comment_leader = '# '
-" autocmd FileType conf,fstab       let b:comment_leader = '# '
-" autocmd FileType tex              let b:comment_leader = '% '
-" autocmd FileType mail             let b:comment_leader = '> '
-" autocmd FileType vim              let b:comment_leader = '" '
-" noremap <silent> <Leader>cc :<C-B>silent <C-E>s/^/<C-R>=escape(b:comment_leader,'\/')<CR>/<CR>:nohlsearch<CR>
-" noremap <silent> <Leader>cu :<C-B>silent <C-E>s/^\V<C-R>=escape(b:comment_leader,'\/')<CR>//e<CR>:nohlsearch<CR>
+noremap <Leader>cc :TComment<CR>
 
 so \users\tmack\vimfiles\userfolder\executesql.vim
 
@@ -164,25 +155,17 @@ filetype indent on
 " Set to auto read when a file is changed from the outside
 set autoread
 
-" " With a map leader it's possible to do extra key combinations
-" " like <leader>w saves the current file
-" let mapleader = ","
-" let g:mapleader = ","
-
 " Fast saving
 nmap <leader>w :wa!<cr>
 
 " Fast omnicomplete
 inoremap <C-Space> <C-X><C-O>
 
-" Fast esc
-noremap <S-CR> <esc>
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Set 7 lines to the cursor - when moving vertically using j/k
-set so=7
+" Set 2 lines to the cursor - when moving vertically using j/k
+set so=2
 
 " Turn on the WiLd menu
 set wildmenu
@@ -192,9 +175,6 @@ set wildignore=*.o,*~,*.pyc,*.obj,*.exe,*.dll
 
 "Always show current position
 set ruler
-
-" Height of the command bar
-set cmdheight=2
 
 " A buffer becomes hidden when it is abandoned
 set hid
@@ -245,10 +225,12 @@ set background=dark
 
 " Set extra options when running in GUI mode
 if has("gui_running")
+    set guifont=Source_Code_Pro_Medium:h11
     set guioptions-=T
-    set guioptions+=e
+    " set guioptions+=e
     set t_Co=256
-    set guitablabel=%M\ %t
+    " set guitablabel=%M\ %t " suspicious this line is creating
+    " a new tab when sourcing vimrc
 endif
 
 " Set utf8 as standard encoding and en_US as the standard language
@@ -330,10 +312,14 @@ map <C-h> <C-W>h
 map <C-l> <C-W>l
 
 " Close the current buffer
-map <leader>bd :Bclose<cr>
+map <leader>bd :bd<cr>
 
 " Close all the buffers
 map <leader>ba :1,1000 bd!<cr>
+
+" next / previous buffers
+noremap <C-n> :bn<cr>
+noremap <C-p> :bp<cr>
 
 " Useful mappings for managing tabs
 map <leader>tn :tabnew<cr>
@@ -344,10 +330,10 @@ map <leader>tm :tabmove
 " " Opens a new tab with the current buffer's path
 " " Super useful when editing files in the same directory
 " map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
-" 
-" " Switch CWD to the directory of the open buffer
-" map <leader>cd :cd %:p:h<cr>:pwd<cr>
-" 
+
+" Switch CWD to the directory of the open buffer
+map <leader>cd :cd %:p:h<cr>:pwd<cr>
+
 " " Specify the behavior when switching between buffers 
 " try
 "   set switchbuf=useopen,usetab,newtab
@@ -369,9 +355,8 @@ map <leader>tm :tabmove
 """"""""""""""""""""""""""""""
 " Always show the status line
 set laststatus=2
-
-" Format the status line
-set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -501,24 +486,4 @@ function! HasPaste()
     return ''
 endfunction
 
-" Don't close window, when deleting a buffer
-command! Bclose call <SID>BufcloseCloseIt()
-function! <SID>BufcloseCloseIt()
-   let l:currentBufNum = bufnr("%")
-   let l:alternateBufNum = bufnr("#")
-
-   if buflisted(l:alternateBufNum)
-     buffer #
-   else
-     bnext
-   endif
-
-   if bufnr("%") == l:currentBufNum
-     new
-   endif
-
-   if buflisted(l:currentBufNum)
-     execute("bdelete! ".l:currentBufNum)
-   endif
-endfunction
 
